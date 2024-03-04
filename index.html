@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Youtube to mpd</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  </head>
+  <body>
+    <header>
+      <h1>Youtube to mpd</h1>
+    </header>
+
+    <main>
+      <form id="form">
+        <input type="text" name="url" id="url" style="width: 100%">
+        <input type="submit" style="width: 100%">
+      </form>
+    </main>
+
+    <script>
+      function onSubmit(e) {
+        e.preventDefault();
+
+        const url = new URL(e.target[0].value);
+        const videoId = url.searchParams?.get('v');
+
+        const Http = new XMLHttpRequest();
+        const requestUrl = 'http://localhost:3002/video/' + videoId;
+        Http.open("GET", requestUrl);
+        Http.send();
+
+	e.target[0].value = "";
+
+        return false;
+      }
+      const form = document.getElementById("form");
+      form.addEventListener("submit", onSubmit);
+    </script>
+  </body>
+</html>
